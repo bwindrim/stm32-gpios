@@ -2,7 +2,7 @@
 #![no_main]
 
 use defmt::info;
-use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_stm32::{exti::ExtiInput, gpio::{Level, Output, Pull, Speed}};
 use embassy_time::Timer;
 use panic_probe as _;
 use defmt_rtt as _;
@@ -19,6 +19,18 @@ async fn main(spawner: Spawner) {
 
     spawner.must_spawn(flash_led(led_gpio));
 
+    let b1 = ExtiInput::new(p.PC13, p.EXTI13, Pull::Up);
+
+    spawner.must_spawn(button(b1, "B1"));
+}
+
+#[task]
+async fn button(mut pin: ExtiInput<'static>, name: &'static str) -> ! {
+    loop {
+        pin.wait_for_any_edge().await;
+        let current_state = pin.is_high();
+        info!("{} changed: {}", name, if current_state { "high" } else { "low" } );
+    }
 }
 
 #[task]
