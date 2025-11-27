@@ -1,6 +1,7 @@
 #![no_std]
 #![no_main]
 
+use defmt::info;
 use embassy_stm32::gpio::{Level, Output, Speed};
 use embassy_time::Timer;
 use panic_probe as _;
@@ -14,6 +15,8 @@ async fn main(spawner: Spawner) {
 
     let led_gpio = Output::new(p.PA5, Level::High, Speed::Medium);
 
+    info!("Starting stm32-gpios");
+
     spawner.must_spawn(flash_led(led_gpio));
 
 }
@@ -22,8 +25,10 @@ async fn main(spawner: Spawner) {
 async fn flash_led(mut gpio: Output<'static>) -> ! {
     loop {
         gpio.set_high();
+        info!("On");
         Timer::after_millis(500).await;
         gpio.set_low();
+        info!("Off");
         Timer::after_millis(500).await;
     }
 }
