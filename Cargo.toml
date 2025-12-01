@@ -8,11 +8,11 @@ name = "stm32-gpios"
 path = "src/main.rs"
 
 [dependencies]
-embassy-executor = { version = "0.7.0", features = [ "executor-thread", "arch-cortex-m", "defmt"] }
-embassy-stm32 = { version = "0.2.0", features = [ "memory-x", "time-driver-any", "unstable-pac", "exti", "stm32u031r8" ] }
-embassy-time = { version = "0.4", features = [ "tick-hz-32_768", "defmt" ] }
-cortex-m = { version = "0.7.6", features = [ "critical-section-single-core" ] }
-cortex-m-rt = { version = "0.7.0" }
+embassy-executor = { version = "0.9.1", features = [ "executor-thread", "arch-cortex-m", "defmt"] }
+embassy-stm32 = { version = "0.4.0", features = [ "memory-x", "time-driver-any", "unstable-pac", "exti", "stm32u031r8" ] }
+embassy-time = { version = "0.5.0", features = [ "tick-hz-32_768", "defmt" ] }
+cortex-m = { version = "0.7.7", features = [ "critical-section-single-core" ] }
+cortex-m-rt = { version = "0.7.5" }
 panic-probe = { version = "1.0", features = [ "print-defmt" ] }
 defmt = { version = "1.0" }
 defmt-rtt = { version = "1.0" }
